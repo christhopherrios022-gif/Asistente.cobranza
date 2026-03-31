@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 
 # API KEY
-openai.api_key = st.secrets["openai.api_key"]
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # CONFIG
 st.set_page_config(page_title="Asistente de Cobranza", layout="centered")
