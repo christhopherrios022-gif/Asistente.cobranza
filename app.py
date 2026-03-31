@@ -1,5 +1,8 @@
 import streamlit as st
-from openai import OpenAI
+import openai
+
+# API KEY
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # CONFIG
 st.set_page_config(page_title="Asistente de Cobranza", layout="centered")
@@ -20,8 +23,6 @@ objecion = st.text_area("Escribe lo que dice el cliente")
 # BOTON
 if st.button("Generar respuesta"):
 
-    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
     prompt = f"""
     Eres un experto en cobranza.
 
@@ -39,12 +40,12 @@ if st.button("Generar respuesta"):
     - corto y listo para llamada
     """
 
-    response = client.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}]
     )
 
-    respuesta = response.choices[0].message.content
+    respuesta = response["choices"][0]["message"]["content"]
 
     st.subheader("🗣️ Respuesta sugerida")
     st.success(respuesta)
